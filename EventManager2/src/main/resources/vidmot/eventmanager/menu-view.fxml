@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<MenuBar xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="vidmot.eventmanager.MenuController">
+    <menus>
+        <Menu mnemonicParsing="false" text="Skrá">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Nýr" onAction="#onNyr"/>
+                <MenuItem mnemonicParsing="false" text="Opna" onAction="#onOpna"/>
+                <MenuItem mnemonicParsing="false" text="Loka" onAction="#onLoka"/>
+                <MenuItem mnemonicParsing="false" text="Vista" onAction="#onVista"/>
+                <MenuItem mnemonicParsing="false" text="Hætta" onAction="#onHaetta"/>
+            </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Breyta">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Eyða" onAction="#onEyda"/>
+            </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Hjalp">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Um" onAction="#onUm"/>
+            </items>
+        </Menu>
+    </menus>
+</MenuBar>

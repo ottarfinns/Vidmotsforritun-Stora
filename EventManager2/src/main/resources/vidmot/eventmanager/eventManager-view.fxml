@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.eventmanager.EventManagerController">
+    <top>
+        <fx:include source="menu-view.fxml" />
+    </top>
+    <center>
+        <StackPane fx:id="fxEventViews" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+
+        </StackPane>
+    </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="39.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+             <Button mnemonicParsing="false" onAction="#opnaSkra" text="Nýtt myndband" />
+             <Button fx:id="spilaButton" mnemonicParsing="false" onAction="#onPlayButton" text="Spila" />
+             <Button mnemonicParsing="false" onAction="#onRewindButton" text="Aftur að byrjun" />
+         </children>
+      </HBox>
+   </bottom>
+    <stylesheets>
+        <URL value="@css/events.css" />
+    </stylesheets>
+</BorderPane>
