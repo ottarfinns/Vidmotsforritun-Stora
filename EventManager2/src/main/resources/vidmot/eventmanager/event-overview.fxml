@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<fx:root styleClass="overview-pane" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="vidmot.eventmanager.OverviewController">
 
     <padding>
         <Insets bottom="30" left="30" right="30" top="30" />
@@ -21,7 +22,7 @@
         <VBox spacing="20">
             <Text style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Yfirlit yfir viðburði" />
 
-            <HBox alignment="CENTER_LEFT" spacing="15" styleClass="filter-box">
+            <HBox alignment="CENTER_LEFT" spacing="15">
                 <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Sía eftir flokki:" />
                 <ComboBox fx:id="siaBox" prefWidth="250" />
                 <Region HBox.hgrow="ALWAYS" />
