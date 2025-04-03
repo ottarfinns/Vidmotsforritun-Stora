@@ -1,5 +1,6 @@
 package vidmot.eventmanager;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -35,6 +36,12 @@ public class EventView extends VBox {
     private TextField heitiField;
 
     @FXML
+    private TextArea lysingArea;
+
+    @FXML
+    private TextField stadssetningField;
+
+    @FXML
     private ComboBox<Flokkur> flokkurComboBox;
 
     @FXML
@@ -46,13 +53,24 @@ public class EventView extends VBox {
     @FXML
     private MediaView mediaView;
 
+    @FXML
+    private Button veljaMyndbandButton;
+
+    @FXML
+    private Button spilaButton;
+
+    @FXML
+    private Button pasaButton;
+
+    @FXML
+    private Button rewindButton;
 
     /**
      * Smiður sem býr til nýtt EventView og hleður inn viðmótinu.
      */
     public EventView() {
         this.eventModel = new EventModel();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("event-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("event-view2.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -69,7 +87,7 @@ public class EventView extends VBox {
         this.eventModel = eventModel;
         System.out.println("Opnum gamla sem var lokað: " + this.eventModel.getEventHeiti());
         System.out.println("Tíminn: " + this.eventModel.getTimi());
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("event-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("event-view2.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -85,6 +103,10 @@ public class EventView extends VBox {
     public void initialize() {
 
         heitiField.textProperty().bindBidirectional(eventModel.getEventHeitiProperty());
+
+        lysingArea.textProperty().bindBidirectional(eventModel.getLysingProperty());
+
+        stadssetningField.textProperty().bindBidirectional(eventModel.getStadssetningProperty());
 
         flokkurComboBox.getItems().setAll(Flokkur.values());
 
@@ -159,24 +181,22 @@ public class EventView extends VBox {
     /**
      * Pásar myndbandið og breytir stöðu hnappsins.
      *
-     * @param playButton hnappurinn sem ýtt var á til að pása myndandið.
+     * @param event atburðurinn sem kemur inn er ónotaður.
      */
-    public void onPasa(Button playButton) {
+    public void onPasa(ActionEvent event) {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
-            playButton.setText("Spila");
         }
     }
 
     /**
      * Spilar myndbandið og breytir stöðu hnappsins.
      *
-     * @param playButton hnappurinn sem ýtt var á til að spila myndandið.
+     * @param event atburðurinn sem kemur inn er ónotaður.
      */
-    public void onSpila(Button playButton) {
+    public void onSpila(ActionEvent event) {
         if (mediaPlayer != null) {
             mediaPlayer.play();
-            playButton.setText("Pása");
         }
     }
 

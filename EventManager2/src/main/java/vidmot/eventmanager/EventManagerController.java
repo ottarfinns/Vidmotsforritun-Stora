@@ -59,9 +59,11 @@ public class EventManagerController {
     public void onPlayButton(ActionEvent event) {
         Button playButton = (Button) event.getSource();
         if (playButton.getText().equals("Spila")) {
-            currentView.onSpila(playButton);
+            //currentView.onSpila(playButton);
+            System.out.println("Spila");
         } else {
-            currentView.onPasa(playButton);
+            //currentView.onPasa(playButton);
+            System.out.println("Spila");
         }
     }
 
@@ -176,7 +178,7 @@ public class EventManagerController {
      */
     public void loka() {
         fxEventViews.getChildren().remove(currentView);
-        currentView.onPasa(spilaButton);
+        //currentView.onPasa();
         switchToLastView();
     }
 
