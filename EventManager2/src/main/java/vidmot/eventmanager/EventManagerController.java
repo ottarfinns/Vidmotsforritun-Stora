@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.StackPane;
+import vinnsla.EventList;
 import vinnsla.EventModel;
 
 import java.util.Optional;
@@ -31,6 +32,7 @@ public class EventManagerController {
 
     // Listi sem heldur utan um EventModel hluti sem hafa verið vistaðir
     private final ObservableList<EventModel> list = FXCollections.observableArrayList();
+    private final EventList eventList = new EventList();
 
     /**
      * Upphafsstillir viðmótið með því upphafsstilla gögn og bætir við fyrsta EventView viðmótshlutnum.
@@ -38,33 +40,6 @@ public class EventManagerController {
     public void initialize() {
         currentView = new EventView();
         fxEventViews.getChildren().add(currentView);
-    }
-
-
-    /**
-     * Kallar á selectMedia() aðferðina í EventView til þess að opna nýja myndbandsskrá.
-     *
-     * @param event atburðurinn sem kemur inn er ónotaður.
-     */
-    public void opnaSkra(ActionEvent event) {
-        currentView.selectMedia();
-        spilaButton.setText("Spila");
-    }
-
-    /**
-     * Bregst við smellum á spila hnappinn og kallar á viðeigandi aðferðir í EventView eftir því hvað stendur á hnappinu.
-     *
-     * @param event atburður sem kemur inn þegar smellt er á spila hnappinn.
-     */
-    public void onPlayButton(ActionEvent event) {
-        Button playButton = (Button) event.getSource();
-        if (playButton.getText().equals("Spila")) {
-            //currentView.onSpila(playButton);
-            System.out.println("Spila");
-        } else {
-            //currentView.onPasa(playButton);
-            System.out.println("Spila");
-        }
     }
 
     /**
