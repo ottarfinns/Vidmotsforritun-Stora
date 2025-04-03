@@ -18,6 +18,8 @@ import java.time.LocalTime;
 public class EventModel {
     // Eigindi
     private final SimpleStringProperty eventHeiti;
+    private final SimpleStringProperty lysing;
+    private final SimpleStringProperty stadssetning;
     private final SimpleObjectProperty<Flokkur> flokkur;
     private final SimpleObjectProperty<LocalDate> dags;
     private final SimpleObjectProperty<LocalTime> timi;
@@ -28,6 +30,7 @@ public class EventModel {
      */
     public EventModel() {
         this.eventHeiti = new SimpleStringProperty("");
+        this.lysing = new SimpleStringProperty("");
         this.flokkur = new SimpleObjectProperty<>(null);
         this.dags = new SimpleObjectProperty<>(LocalDate.now());
         this.timi = new SimpleObjectProperty<>(null);
@@ -44,11 +47,27 @@ public class EventModel {
     }
 
     /**
+     * Getter fyrir StringProperty lýsingar viðburðar.
+     * @return StringProperty fyrir lýsingu viðburðar.
+     */
+    public StringProperty getLysingProperty() {
+        return lysing;
+    }
+
+    /**
      * Getter fyrir heiti viðburðar.
      * @return heiti viðburðar.
      */
     public String getEventHeiti() {
         return eventHeiti.get();
+    }
+
+    /**
+     * Getter fyrir lýsingu viðburðar.
+     * @return lýsing viðburðar.
+     */
+    public String getLysing() {
+        return lysing.get();
     }
 
     /**
