@@ -86,8 +86,8 @@
 
         <!-- Vista og haetta hnappar -->
         <HBox alignment="CENTER_RIGHT" spacing="10">
-            <Button fx:id="vistaButton" text="Vista" />
-            <Button fx:id="hættaButton" text="Hætta" />
+            <Button fx:id="vistaButton" onAction="#onVista" text="Vista" />
+            <Button fx:id="hættaButton" onAction="#onHaetta" text="Hætta" />
         </HBox>
     </children>
 </fx:root>

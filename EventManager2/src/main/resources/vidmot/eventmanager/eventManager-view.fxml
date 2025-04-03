@@ -16,6 +16,7 @@
         </StackPane>
     </center>
    <bottom>
+       <!--
       <HBox alignment="CENTER" prefHeight="39.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
              <Button mnemonicParsing="false" onAction="#opnaSkra" text="Nýtt myndband" />
@@ -23,6 +24,7 @@
              <Button mnemonicParsing="false" onAction="#onRewindButton" text="Aftur að byrjun" />
          </children>
       </HBox>
+      -->
    </bottom>
     <stylesheets>
         <URL value="@css/events.css" />

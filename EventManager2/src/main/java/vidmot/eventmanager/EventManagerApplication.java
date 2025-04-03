@@ -25,6 +25,11 @@ public class EventManagerApplication extends Application {
 
         stage.setTitle("Viðburðarstjórinn");
         stage.setScene(scene);
+
+        // Set window size to 700x800
+        stage.setWidth(700);
+        stage.setHeight(900);
+
         stage.show();
     }
 

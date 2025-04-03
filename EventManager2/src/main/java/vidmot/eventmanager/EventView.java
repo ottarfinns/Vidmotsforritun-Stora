@@ -1,5 +1,6 @@
 package vidmot.eventmanager;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -207,6 +208,14 @@ public class EventView extends VBox {
         if (mediaPlayer != null) {
             mediaPlayer.seek(Duration.ZERO);
         }
+    }
+
+    public void onVista() {
+        EventManagerApplication.getController().vista();
+    }
+
+    public void onHaetta() {
+        Platform.exit();
     }
 
 
