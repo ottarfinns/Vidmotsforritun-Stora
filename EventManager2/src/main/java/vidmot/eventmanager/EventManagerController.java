@@ -1,8 +1,5 @@
 package vidmot.eventmanager;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -31,7 +28,6 @@ public class EventManagerController {
     private EventView currentView;
 
     // Listi sem heldur utan um EventModel hluti sem hafa verið vistaðir
-    private final ObservableList<EventModel> list = FXCollections.observableArrayList();
     private final EventList eventList = new EventList();
 
     /**
@@ -40,15 +36,6 @@ public class EventManagerController {
     public void initialize() {
         currentView = new EventView();
         fxEventViews.getChildren().add(currentView);
-    }
-
-    /**
-     * Bregst við þegar smellt er á "Aftur að byrjun" hnappinn.
-     *
-     * @param event atburðurinn sem kemur inn er ónotaður.
-     */
-    public void onRewindButton(ActionEvent event) {
-        currentView.onRewind();
     }
 
     /**
@@ -66,9 +53,7 @@ public class EventManagerController {
      * Vistar viðburðin með því að bæta EventModel viðburðarins í lista ef hann er ekki þegar til.
      */
     public void vista() {
-        if (!list.contains(currentView.getEventModel())) {
-            list.add(currentView.getEventModel());
-        }
+        eventList.addEvent(currentView.getEventModel());
     }
 
     /**
@@ -115,10 +100,7 @@ public class EventManagerController {
         if (result.isPresent()) {
             String eventName = result.get();
 
-            EventModel eventModel = list.stream()
-                    .filter(event -> event.getEventHeiti().equals(eventName))
-                    .findFirst()
-                    .orElse(null);
+            EventModel eventModel = eventList.findEventByName(eventName);
             if (eventModel != null) {
                 currentView = findEventView(eventModel);
 
@@ -153,7 +135,6 @@ public class EventManagerController {
      */
     public void loka() {
         fxEventViews.getChildren().remove(currentView);
-        //currentView.onPasa();
         switchToLastView();
     }
 
@@ -163,8 +144,6 @@ public class EventManagerController {
     public void eyda() {
         if (currentView != null) {
             fxEventViews.getChildren().remove(currentView);
-
-            list.remove(currentView.getEventModel());
 
             switchToLastView();
         }
