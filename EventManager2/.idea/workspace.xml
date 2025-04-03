@@ -18,8 +18,8 @@
       <list>
         <option value="Enum" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>

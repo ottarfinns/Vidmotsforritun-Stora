@@ -31,6 +31,7 @@ public class EventModel {
     public EventModel() {
         this.eventHeiti = new SimpleStringProperty("");
         this.lysing = new SimpleStringProperty("");
+        this.stadssetning = new SimpleStringProperty("");
         this.flokkur = new SimpleObjectProperty<>(null);
         this.dags = new SimpleObjectProperty<>(LocalDate.now());
         this.timi = new SimpleObjectProperty<>(null);
@@ -55,6 +56,14 @@ public class EventModel {
     }
 
     /**
+     * Getter fyrir StringProperty staðsetningar viðburðar.
+     * @return StringProperty fyrir staðsetningu viðburðar.
+     */
+    public StringProperty getStadssetningProperty() {
+        return stadssetning;
+    }
+
+    /**
      * Getter fyrir heiti viðburðar.
      * @return heiti viðburðar.
      */
@@ -68,6 +77,14 @@ public class EventModel {
      */
     public String getLysing() {
         return lysing.get();
+    }
+
+    /**
+     * Getter fyrir staðsetningu viðburðar.
+     * @return staðsetning viðburðar.
+     */
+    public String getStadssetning() {
+        return stadssetning.get();
     }
 
     /**
