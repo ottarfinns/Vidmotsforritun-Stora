@@ -49,14 +49,11 @@ public class ViewSwitcher {
 
             if (cache.containsKey(view)) {
                 System.out.println("Loading from cache");
-
                 root = cache.get(view);
             } else {
                 System.out.println("Loading from FXML");
-
-                root = FXMLLoader.load(
-                        ViewSwitcher.class.getResource(view.getFileName())
-                );
+                FXMLLoader loader = new FXMLLoader(ViewSwitcher.class.getResource(view.getFileName()));
+                root = loader.load();
                 cache.put(view, root);
             }
 

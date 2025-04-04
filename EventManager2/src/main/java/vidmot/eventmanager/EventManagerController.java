@@ -28,7 +28,7 @@ public class EventManagerController {
     private EventView currentView;
 
     // Listi sem heldur utan um EventModel hluti sem hafa verið vistaðir
-    private final EventList eventList = new EventList();
+    private final EventList eventList = EventManagerApplication.getEventList();
 
     /**
      * Upphafsstillir viðmótið með því upphafsstilla gögn og bætir við fyrsta EventView viðmótshlutnum.
@@ -68,7 +68,6 @@ public class EventManagerController {
         targetView.setVisible(true);
         targetView.setFocusTraversable(true);
     }
-
 
     /**
      * Finnur viðburð með sama EventModel og fallið fær sem inntak.
@@ -147,5 +146,12 @@ public class EventManagerController {
 
             switchToLastView();
         }
+    }
+
+    /**
+     * Skiptir yfir í yfirlitssíðu.
+     */
+    public void goToOverview() {
+        ViewSwitcher.switchTo(View.OVERVIEW);
     }
 }

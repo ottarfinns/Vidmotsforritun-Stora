@@ -16,15 +16,11 @@
         </StackPane>
     </center>
    <bottom>
-       <!--
       <HBox alignment="CENTER" prefHeight="39.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-             <Button mnemonicParsing="false" onAction="#opnaSkra" text="Nýtt myndband" />
-             <Button fx:id="spilaButton" mnemonicParsing="false" onAction="#onPlayButton" text="Spila" />
-             <Button mnemonicParsing="false" onAction="#onRewindButton" text="Aftur að byrjun" />
+             <Button fx:id="yfirlitButton" mnemonicParsing="false" onAction="#goToOverview" text="Yfirlit" />
          </children>
       </HBox>
-      -->
    </bottom>
     <!--
     <stylesheets>

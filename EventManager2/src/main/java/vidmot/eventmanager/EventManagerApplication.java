@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import vinnsla.EventList;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
  */
 public class EventManagerApplication extends Application {
     private static EventManagerController controller;
+    private static final EventList eventList = new EventList();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -23,12 +25,15 @@ public class EventManagerApplication extends Application {
 
         controller = fxmlLoader.getController();
 
+        // Set up ViewSwitcher with the scene
+        ViewSwitcher.setScene(scene);
+
         stage.setTitle("Viðburðarstjórinn");
         stage.setScene(scene);
 
-        // Set window size to 700x800
+        // Set window size to 700x950
         stage.setWidth(700);
-        stage.setHeight(900);
+        stage.setHeight(950);
 
         stage.show();
     }
@@ -40,6 +45,15 @@ public class EventManagerApplication extends Application {
      */
     public static EventManagerController getController() {
         return controller;
+    }
+
+    /**
+     * Skilar lista af viðburðum.
+     *
+     * @return Tilvísun í EventList hlutinn.
+     */
+    public static EventList getEventList() {
+        return eventList;
     }
 
     public static void main(String[] args) {

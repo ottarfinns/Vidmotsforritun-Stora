@@ -93,4 +93,11 @@ public class EventList {
         events.clear();
     }
 
+    public void printAll() {
+        System.out.println("Stærð listans er " + getEventCount());
+        for (EventModel event : events) {
+            System.out.println(event.getEventHeiti() + " er vistaður");
+        }
+    }
+
 }
