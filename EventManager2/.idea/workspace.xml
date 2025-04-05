@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f0c19b21-06fa-4783-88d4-9ad7f0012143" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vidmot/eventmanager/EventManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vidmot/eventmanager/EventManagerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vidmot/eventmanager/EventView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vidmot/eventmanager/EventView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vinnsla/EventModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vinnsla/EventModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/vidmot/eventmanager/event-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/vidmot/eventmanager/event-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/vidmot/eventmanager/event-view2.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

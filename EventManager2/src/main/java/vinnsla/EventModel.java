@@ -24,6 +24,8 @@ public class EventModel {
     private final SimpleObjectProperty<LocalDate> dags;
     private final SimpleObjectProperty<LocalTime> timi;
     private final SimpleObjectProperty<Media> myndband;
+    private final SimpleObjectProperty<Endurtekning> endurtekning;
+    private final SimpleObjectProperty<LocalDate> endurtekningLokadagur;
 
     /**
      * Smiður fyrir klasann sem upphafsstillir eigindin.
@@ -36,6 +38,8 @@ public class EventModel {
         this.dags = new SimpleObjectProperty<>(LocalDate.now());
         this.timi = new SimpleObjectProperty<>(null);
         this.myndband = new SimpleObjectProperty<>(null);
+        this.endurtekning = new SimpleObjectProperty<>(Endurtekning.EKKI);
+        this.endurtekningLokadagur = new SimpleObjectProperty<>(null);
     }
 
 
@@ -141,5 +145,37 @@ public class EventModel {
      */
     public void setMyndband(Media myndband) {
         this.myndband.set(myndband);
+    }
+
+    /**
+     * Getter fyrir endurtekningarmynstur.
+     * @return endurtekningarmynstur.
+     */
+    public Endurtekning getEndurtekning() {
+        return endurtekning.get();
+    }
+
+    /**
+     * Getter fyrir ObjectProperty endurtekningar.
+     * @return ObjectProperty fyrir endurtekningu.
+     */
+    public ObjectProperty<Endurtekning> getEndurtekningProperty() {
+        return endurtekning;
+    }
+
+    /**
+     * Getter fyrir lokadag endurtekningar.
+     * @return lokadagur endurtekningar.
+     */
+    public LocalDate getEndurtekningLokadagur() {
+        return endurtekningLokadagur.get();
+    }
+
+    /**
+     * Getter fyrir ObjectProperty lokadags endurtekningar.
+     * @return ObjectProperty fyrir lokadag endurtekningar.
+     */
+    public ObjectProperty<LocalDate> getEndurtekningLokadagurProperty() {
+        return endurtekningLokadagur;
     }
 }

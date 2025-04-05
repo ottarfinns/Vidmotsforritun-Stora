@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import vinnsla.EventModel;
 import vinnsla.Flokkur;
+import vinnsla.Endurtekning;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,6 +66,15 @@ public class EventView extends VBox {
 
     @FXML
     private Button rewindButton;
+
+    @FXML
+    private ComboBox<Endurtekning> endurtekningComboBox;
+
+    @FXML
+    private DatePicker endurtekningLokadagurPicker;
+
+    @FXML
+    private VBox endurtekningControls;
 
     /**
      * Smiður sem býr til nýtt EventView og hleður inn viðmótinu.
@@ -161,6 +171,17 @@ public class EventView extends VBox {
             mediaView.setMediaPlayer(mediaPlayer);
         }
 
+        endurtekningComboBox.getItems().setAll(Endurtekning.values());
+        endurtekningComboBox.valueProperty().bindBidirectional(eventModel.getEndurtekningProperty());
+
+        endurtekningLokadagurPicker.valueProperty().bindBidirectional(eventModel.getEndurtekningLokadagurProperty());
+
+        endurtekningComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            boolean showControls = newValue != Endurtekning.EKKI;
+            endurtekningControls.setVisible(showControls);
+        });
+
+        endurtekningControls.setVisible(endurtekningComboBox.getValue() != Endurtekning.EKKI);
     }
 
     /**

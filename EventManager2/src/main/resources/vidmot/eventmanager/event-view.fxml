@@ -64,6 +64,18 @@
                     </VBox>
                 </HBox>
 
+                <!-- Endurtekning -->
+                <HBox spacing="20">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="Endurtekning" />
+                        <ComboBox fx:id="endurtekningComboBox" />
+                    </VBox>
+                    <VBox fx:id="endurtekningControls" spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="Lokadagur" />
+                        <DatePicker fx:id="endurtekningLokadagurPicker" />
+                    </VBox>
+                </HBox>
+
                 <!-- Mydbandið -->
                 <VBox spacing="5">
                     <Label text="Myndband" />
