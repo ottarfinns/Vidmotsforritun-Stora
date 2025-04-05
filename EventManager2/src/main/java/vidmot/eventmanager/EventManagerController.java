@@ -103,25 +103,30 @@ public class EventManagerController {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String eventName = result.get();
-
-            EventModel eventModel = eventList.findEventByName(eventName);
-            if (eventModel != null) {
-                currentView = findEventView(eventModel);
-
-                if (currentView == null) {
-                    currentView = new EventView(eventModel);
-                    fxEventViews.getChildren().add(currentView);
-                }
-
-            } else {
-                System.out.println("Enginn viðburður með nafnið " + eventName + " fannst.");
-                System.out.println("Opnum nýjan viðburð.");
-                EventView newView = new EventView();
-                fxEventViews.getChildren().add(newView);
-                currentView = newView;
-            }
-            switchView(currentView);
+            finnaEvent(eventName);
         }
+    }
+
+    public void finnaEvent(String eventName) {
+
+        EventModel eventModel = eventList.findEventByName(eventName);
+        if (eventModel != null) {
+            currentView = findEventView(eventModel);
+
+            if (currentView == null) {
+                currentView = new EventView(eventModel);
+                fxEventViews.getChildren().add(currentView);
+            }
+
+        } else {
+            System.out.println("Enginn viðburður með nafnið " + eventName + " fannst.");
+            System.out.println("Opnum nýjan viðburð.");
+            EventView newView = new EventView();
+            fxEventViews.getChildren().add(newView);
+            currentView = newView;
+        }
+        switchView(currentView);
+
     }
 
     /**

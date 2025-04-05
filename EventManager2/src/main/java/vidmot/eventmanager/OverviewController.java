@@ -63,6 +63,8 @@ public class OverviewController {
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
+    private EventModel selectedEvent;
+
     /**
      * Upphafsstillir viðmótið með því upphafsstilla gögn og bætir við fyrsta EventView viðmótshlutnum.
      */
@@ -76,6 +78,7 @@ public class OverviewController {
         // Add listener to enable/disable the open button based on selection
         eventTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             opnaButton.setDisable(newSelection == null);
+            selectedEvent = newSelection;
         });
 
         // Set up event handlers for buttons
@@ -164,19 +167,21 @@ public class OverviewController {
      */
     private void openSelectedEvent() {
         // TODO: Implement opening the selected event
+        EventManagerController controller = goBack();
+        controller.finnaEvent(selectedEvent.getEventHeiti());
     }
 
     /**
      * Fer aftur á aðalsíðu.
      */
-    public void goBack() {
+    public EventManagerController goBack() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vidmot/eventmanager/eventManager-view.fxml"));
             Parent root = loader.load();
 
             // Get the controller from the loader
             EventManagerController controller = loader.getController();
-            
+
             // Set the controller in the application
             EventManagerApplication.setController(controller);
 
@@ -188,9 +193,12 @@ public class OverviewController {
 
             // Initialize the view
             controller.initialize();
+
+            return controller;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     /**
