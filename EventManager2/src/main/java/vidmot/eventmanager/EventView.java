@@ -96,6 +96,10 @@ public class EventView extends VBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        heitiField.setText(eventModel.getEventHeiti());
+        lysingArea.setText(eventModel.getLysing());
+        stadssetningField.setText(eventModel.getStadssetning());
+
     }
 
     /**
@@ -103,17 +107,21 @@ public class EventView extends VBox {
      */
     public void initialize() {
 
-        heitiField.textProperty().bindBidirectional(eventModel.getEventHeitiProperty());
+        //heitiField.textProperty().bindBidirectional(eventModel.getEventHeitiProperty());
+        eventModel.getEventHeitiProperty().bind(heitiField.textProperty());
 
-        lysingArea.textProperty().bindBidirectional(eventModel.getLysingProperty());
-
-        stadssetningField.textProperty().bindBidirectional(eventModel.getStadssetningProperty());
+        //lysingArea.textProperty().bindBidirectional(eventModel.getLysingProperty());
+        eventModel.getLysingProperty().bind(lysingArea.textProperty());
+        //stadssetningField.textProperty().bindBidirectional(eventModel.getStadssetningProperty());
+        eventModel.getStadssetningProperty().bind(stadssetningField.textProperty());
 
         flokkurComboBox.getItems().setAll(Flokkur.values());
 
-        flokkurComboBox.valueProperty().bindBidirectional(eventModel.getFlokkurProperty());
+        //flokkurComboBox.valueProperty().bindBidirectional(eventModel.getFlokkurProperty());
+        eventModel.getFlokkurProperty().bind(flokkurComboBox.valueProperty());
 
-        dagsPicker.valueProperty().bindBidirectional(eventModel.getDagsProperty());
+        //dagsPicker.valueProperty().bindBidirectional(eventModel.getDagsProperty());
+        eventModel.getDagsProperty().bind(dagsPicker.valueProperty());
 
         timiSpinner.setValueFactory(new SpinnerValueFactory<>() {
             {

@@ -158,7 +158,20 @@ public class OverviewController {
      * Opnar valinn viðburð.
      */
     private void openSelectedEvent() {
-        // TODO: Implement opening the selected event
+        // Get the selected event
+        EventModel selectedEvent = eventTableView.getSelectionModel().getSelectedItem();
+        if (selectedEvent == null) {
+            return;
+        }
+
+        System.out.println("Opening event: " + selectedEvent.getEventHeiti());
+        
+        // Switch to main view
+        ViewSwitcher.switchTo(View.UPPHAF);
+        
+        // Get the controller and set up the view with the selected event
+        EventManagerController controller = EventManagerApplication.getController();
+        controller.setCurrentView(new EventView(selectedEvent));
     }
 
     /**

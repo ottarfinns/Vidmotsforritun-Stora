@@ -67,6 +67,7 @@ public class EventManagerController {
         }
         targetView.setVisible(true);
         targetView.setFocusTraversable(true);
+        System.out.println("Switching to view: " + targetView.getEventModel().getEventHeiti());
     }
 
     /**
@@ -153,5 +154,23 @@ public class EventManagerController {
      */
     public void goToOverview() {
         ViewSwitcher.switchTo(View.OVERVIEW);
+    }
+
+    /**
+     * Sets the current view to the provided EventView and updates the UI.
+     * 
+     * @param view The EventView to set as current
+     */
+    public void setCurrentView(EventView view) {
+        // Clear any existing views
+        System.out.println("Setting current view to: " + view.getEventModel().getEventHeiti());
+        fxEventViews.getChildren().clear();
+        
+        // Add the new view
+        currentView = view;
+        fxEventViews.getChildren().add(currentView);
+        
+        // Make it visible
+        switchView(currentView);
     }
 }
