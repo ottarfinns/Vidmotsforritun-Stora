@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.StackPane;
@@ -60,6 +61,18 @@ public class EventManagerController {
      */
     public void vista() {
         EventModel eventModel = currentView.getEventModel();
+
+        for (EventModel eventInList : eventList.getAllEvents()) {
+            if (eventInList.getEventHeiti().equals(eventModel.getEventHeiti()) && eventInList != eventModel) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Villa");
+                alert.setHeaderText(null);
+                alert.setContentText("Ekki er hægt að vista viðburð með sama nafn");
+                alert.showAndWait();
+                return;
+            }
+        }
+
         if (eventModel.getEndurtekning() != null &&
             eventModel.getEndurtekning() != Endurtekning.EKKI &&
             eventModel.getEndurtekningLokadagur() != null) {
@@ -85,7 +98,7 @@ public class EventManagerController {
             for (int i = 0; i <= totalIntervals; i++) {
                 EventModel newEventModel = new EventModel(eventModel);
                 newEventModel.setEventHeiti(eventModel.getEventHeiti() + " - " + nr);
-                
+
                 if (eventModel.getEndurtekning() == Endurtekning.MANADARLEGA) {
                     newEventModel.setDags(eventModel.getDags().plusMonths(i));
                 } else if (eventModel.getEndurtekning() == Endurtekning.ARLEGA) {
@@ -93,7 +106,7 @@ public class EventManagerController {
                 } else {
                     newEventModel.setDags(eventModel.getDags().plusDays(i * incr));
                 }
-                
+
                 eventList.addEvent(newEventModel);
                 nr++;
             }

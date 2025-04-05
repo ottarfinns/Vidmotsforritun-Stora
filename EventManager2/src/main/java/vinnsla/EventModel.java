@@ -36,7 +36,7 @@ public class EventModel {
         this.stadssetning = new SimpleStringProperty("");
         this.flokkur = new SimpleObjectProperty<>(null);
         this.dags = new SimpleObjectProperty<>(LocalDate.now());
-        this.timi = new SimpleObjectProperty<>(null);
+        this.timi = new SimpleObjectProperty<>(LocalTime.of(12, 0));
         this.myndband = new SimpleObjectProperty<>(null);
         this.endurtekning = new SimpleObjectProperty<>(Endurtekning.EKKI);
         this.endurtekningLokadagur = new SimpleObjectProperty<>(null);
