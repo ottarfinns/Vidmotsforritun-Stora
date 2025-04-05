@@ -1,13 +1,18 @@
 package vidmot.eventmanager;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import vinnsla.EventList;
 import vinnsla.EventModel;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -152,6 +157,21 @@ public class EventManagerController {
      * Skiptir yfir í yfirlitssíðu.
      */
     public void goToOverview() {
-        ViewSwitcher.switchTo(View.OVERVIEW);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vidmot/eventmanager/event-overview.fxml"));
+
+            // Búum til nýjan controller
+            OverviewController overviewController = new OverviewController();
+            loader.setController(overviewController);
+
+            Parent root = loader.load();
+            Scene overviewScene = new Scene(root);
+
+            Stage currentStage = (Stage) fxEventViews.getScene().getWindow();
+            currentStage.setScene(overviewScene);
+            currentStage.setTitle("Yfirlit");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

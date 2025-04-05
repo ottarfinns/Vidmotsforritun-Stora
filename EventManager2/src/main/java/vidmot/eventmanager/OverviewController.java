@@ -5,15 +5,20 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import vinnsla.EventList;
 import vinnsla.EventModel;
 import vinnsla.Flokkur;
 
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -162,10 +167,30 @@ public class OverviewController {
     }
 
     /**
-     * Fer til baka í aðalsíðu.
+     * Fer aftur á aðalsíðu.
      */
-    private void goBack() {
-        ViewSwitcher.switchTo(View.UPPHAF);
+    public void goBack() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vidmot/eventmanager/eventManager-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller from the loader
+            EventManagerController controller = loader.getController();
+            
+            // Set the controller in the application
+            EventManagerApplication.setController(controller);
+
+            // Create a new scene and set it
+            Stage currentStage = (Stage) eventTableView.getScene().getWindow();
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+            currentStage.setTitle("Viðburðarstjórinn");
+
+            // Initialize the view
+            controller.initialize();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
