@@ -51,6 +51,7 @@
         <HBox alignment="CENTER" spacing="15">
             <Button fx:id="tilBakaButton" text="Til baka" />
             <Button fx:id="opnaButton" text="Opna valinn viðburð" />
+            <Button fx:id="eydaButton" text="Eyða viðburði" />
             <Button fx:id="haettaButton" text="Hætta" />
          <padding>
             <Insets top="10.0" />

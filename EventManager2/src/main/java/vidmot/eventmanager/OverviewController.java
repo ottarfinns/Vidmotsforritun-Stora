@@ -59,6 +59,9 @@ public class OverviewController {
     @FXML
     private Button haettaButton;
 
+    @FXML
+    private Button eydaButton;
+
     private final EventList eventList = EventManagerApplication.getEventList();
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -75,9 +78,10 @@ public class OverviewController {
         // Populate the category filter ComboBox
         siaBox.setItems(FXCollections.observableArrayList(Flokkur.values()));
 
-        // Add listener to enable/disable the open button based on selection
+        // Add listener to enable/disable the open and delete buttons based on selection
         eventTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             opnaButton.setDisable(newSelection == null);
+            eydaButton.setDisable(newSelection == null);
             selectedEvent = newSelection;
         });
 
@@ -85,6 +89,7 @@ public class OverviewController {
         tilBakaButton.setOnAction(e -> goBack());
         haettaButton.setOnAction(e -> exitApplication());
         opnaButton.setOnAction(e -> openSelectedEvent());
+        eydaButton.setOnAction(e -> deleteSelectedEvent());
 
         // Add listener to filter events based on selected category
         siaBox.valueProperty().addListener((obs, oldValue, newValue) -> {
@@ -169,6 +174,16 @@ public class OverviewController {
         // TODO: Implement opening the selected event
         EventManagerController controller = goBack();
         controller.finnaEvent(selectedEvent.getEventHeiti());
+    }
+
+    /**
+     * Eyðir völdum viðburði.
+     */
+    private void deleteSelectedEvent() {
+        if (selectedEvent != null) {
+            eventList.removeEvent(selectedEvent);
+            loadEvents(); 
+        }
     }
 
     /**
