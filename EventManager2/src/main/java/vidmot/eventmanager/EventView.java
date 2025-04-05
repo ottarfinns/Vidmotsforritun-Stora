@@ -18,6 +18,7 @@ import vinnsla.Endurtekning;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.Locale;
 
 
 /**
@@ -112,6 +113,8 @@ public class EventView extends VBox {
      * Upphafsstillir viðmótið og bindur gögn frá EventModel við viðmótshluti.
      */
     public void initialize() {
+        // Set locale for date format
+        Locale.setDefault(Locale.forLanguageTag("is-IS"));
 
         heitiField.textProperty().bindBidirectional(eventModel.getEventHeitiProperty());
 

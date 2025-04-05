@@ -7,7 +7,7 @@ public enum Endurtekning {
     EKKI("Engin endurtekning"),
     DAGLEGA("Daglega"),
     VIKULEGA("Vikulega"),
-    MANUDARLEGA("Mánaðarlega"),
+    MANADARLEGA("Mánaðarlega"),
     ARLEGA("Árlega");
 
     private final String lysing;

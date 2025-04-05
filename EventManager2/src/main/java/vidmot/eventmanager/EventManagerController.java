@@ -64,15 +64,38 @@ public class EventManagerController {
             eventModel.getEndurtekning() != Endurtekning.EKKI &&
             eventModel.getEndurtekningLokadagur() != null) {
 
+            int nr = 1;
+            int incr = 1;
+            int totalIntervals = 0;
+
             if (eventModel.getEndurtekning() == Endurtekning.DAGLEGA) {
-                System.out.println("Endurtekning: Daglega");
-                int fjoldiEndurtekninga = eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).getDays();
-                for (int i = 0; i <= fjoldiEndurtekninga; i++) {
-                    EventModel newEventModel = new EventModel(eventModel);
-                    newEventModel.setEventHeiti(eventModel.getEventHeiti() + " - " + (i+1));
-                    newEventModel.setDags(eventModel.getDags().plusDays(i));
-                    eventList.addEvent(newEventModel);
+                totalIntervals = (int) eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).getDays();
+            }
+            else if (eventModel.getEndurtekning() == Endurtekning.VIKULEGA) {
+                incr = 7;
+                totalIntervals = (int) eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).getDays() / 7;
+            }
+            else if (eventModel.getEndurtekning() == Endurtekning.MANADARLEGA) {
+                totalIntervals = (int) eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).toTotalMonths();
+            }
+            else if (eventModel.getEndurtekning() == Endurtekning.ARLEGA) {
+                totalIntervals = (int) eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).getYears();
+            }
+
+            for (int i = 0; i <= totalIntervals; i++) {
+                EventModel newEventModel = new EventModel(eventModel);
+                newEventModel.setEventHeiti(eventModel.getEventHeiti() + " - " + nr);
+                
+                if (eventModel.getEndurtekning() == Endurtekning.MANADARLEGA) {
+                    newEventModel.setDags(eventModel.getDags().plusMonths(i));
+                } else if (eventModel.getEndurtekning() == Endurtekning.ARLEGA) {
+                    newEventModel.setDags(eventModel.getDags().plusYears(i));
+                } else {
+                    newEventModel.setDags(eventModel.getDags().plusDays(i * incr));
                 }
+                
+                eventList.addEvent(newEventModel);
+                nr++;
             }
         } else {
             eventList.addEvent(eventModel);
