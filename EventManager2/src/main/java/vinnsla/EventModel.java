@@ -88,6 +88,14 @@ public class EventModel {
     }
 
     /**
+     * Getter fyrir dagsetningu viðburðar.
+     * @return dagsetning viðburðar.
+     */ 
+    public String getDagsetning() {
+        return dags.get().toString();
+    }
+
+    /**
      * Getter fyrir ObjectProperty flokks viðburðarins.
      * @return ObjectProperty fyrir flokk viðburðarins.
      */

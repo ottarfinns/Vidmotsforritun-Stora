@@ -92,7 +92,7 @@ public class EventManagerController {
     }
 
     /**
-     * Opnar vistaðan viðburð eftir nafni, eða býr til nýjan ef enginn viðburður finnst.
+     * Opnar dialog til að fá nafn á vistuðum viðburði og opnar hann ef viðburðurinn finnst.
      */
     public void opna() {
         TextInputDialog dialog = new TextInputDialog();
@@ -107,6 +107,10 @@ public class EventManagerController {
         }
     }
 
+    /**
+     * Finnur viðburð eftir nafni og opnar hann ef hann finnst
+     * @param eventName nafn á viðburði
+     */
     public void finnaEvent(String eventName) {
 
         EventModel eventModel = eventList.findEventByName(eventName);
