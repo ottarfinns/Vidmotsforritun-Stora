@@ -47,6 +47,10 @@ public class EventManagerApplication extends Application {
         return controller;
     }
 
+    public static void setController(EventManagerController controller) {
+        EventManagerApplication.controller = controller;
+    }
+
     /**
      * Skilar lista af viðburðum.
      *

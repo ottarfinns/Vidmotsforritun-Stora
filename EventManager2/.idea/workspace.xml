@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0c19b21-06fa-4783-88d4-9ad7f0012143" name="Changes" comment="" />
+    <list default="true" id="f0c19b21-06fa-4783-88d4-9ad7f0012143" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vidmot/eventmanager/EventManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vidmot/eventmanager/EventManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vidmot/eventmanager/EventView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vidmot/eventmanager/EventView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/vinnsla/Endurtekning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vinnsla/Endurtekning.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,6 +31,9 @@
   <component name="FindBugs-IDEA-Workspace">
     <analyzeAfterCompile>true</analyzeAfterCompile>
     <toolWindowToFront>false</toolWindowToFront>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -58,6 +66,9 @@
     &quot;Maven.EventManager [org.apache.maven.plugins:maven-jar-plugin:2.4:jar].executor&quot;: &quot;Run&quot;,
     &quot;Maven.EventManager [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ViewTest&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/ottarfinnsson/Desktop/HÍ/Vor-25/VMF-Verkefni/EventManager2&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,

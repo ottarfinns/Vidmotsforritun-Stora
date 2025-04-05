@@ -5,15 +5,20 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import vinnsla.EventList;
 import vinnsla.EventModel;
 import vinnsla.Flokkur;
 
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -58,6 +63,8 @@ public class OverviewController {
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
+    private EventModel selectedEvent;
+
     /**
      * Upphafsstillir viðmótið með því upphafsstilla gögn og bætir við fyrsta EventView viðmótshlutnum.
      */
@@ -71,6 +78,7 @@ public class OverviewController {
         // Add listener to enable/disable the open button based on selection
         eventTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             opnaButton.setDisable(newSelection == null);
+            selectedEvent = newSelection;
         });
 
         // Set up event handlers for buttons
@@ -159,13 +167,38 @@ public class OverviewController {
      */
     private void openSelectedEvent() {
         // TODO: Implement opening the selected event
+        EventManagerController controller = goBack();
+        controller.finnaEvent(selectedEvent.getEventHeiti());
     }
 
     /**
-     * Fer til baka í aðalsíðu.
+     * Fer aftur á aðalsíðu.
      */
-    private void goBack() {
-        ViewSwitcher.switchTo(View.UPPHAF);
+    public EventManagerController goBack() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vidmot/eventmanager/eventManager-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller from the loader
+            EventManagerController controller = loader.getController();
+
+            // Set the controller in the application
+            EventManagerApplication.setController(controller);
+
+            // Create a new scene and set it
+            Stage currentStage = (Stage) eventTableView.getScene().getWindow();
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+            currentStage.setTitle("Viðburðarstjórinn");
+
+            // Initialize the view
+            controller.initialize();
+
+            return controller;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

@@ -13,10 +13,12 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import vinnsla.EventModel;
 import vinnsla.Flokkur;
+import vinnsla.Endurtekning;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.Locale;
 
 
 /**
@@ -66,12 +68,21 @@ public class EventView extends VBox {
     @FXML
     private Button rewindButton;
 
+    @FXML
+    private ComboBox<Endurtekning> endurtekningComboBox;
+
+    @FXML
+    private DatePicker endurtekningLokadagurPicker;
+
+    @FXML
+    private VBox endurtekningControls;
+
     /**
      * Smiður sem býr til nýtt EventView og hleður inn viðmótinu.
      */
     public EventView() {
         this.eventModel = new EventModel();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("event-view2.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("event-view.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -88,7 +99,7 @@ public class EventView extends VBox {
         this.eventModel = eventModel;
         System.out.println("Opnum gamla sem var lokað: " + this.eventModel.getEventHeiti());
         System.out.println("Tíminn: " + this.eventModel.getTimi());
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("event-view2.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("event-view.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -102,6 +113,8 @@ public class EventView extends VBox {
      * Upphafsstillir viðmótið og bindur gögn frá EventModel við viðmótshluti.
      */
     public void initialize() {
+        // Set locale for date format
+        Locale.setDefault(Locale.forLanguageTag("is-IS"));
 
         heitiField.textProperty().bindBidirectional(eventModel.getEventHeitiProperty());
 
@@ -160,6 +173,17 @@ public class EventView extends VBox {
             mediaView.setMediaPlayer(mediaPlayer);
         }
 
+        endurtekningComboBox.getItems().setAll(Endurtekning.values());
+        endurtekningComboBox.valueProperty().bindBidirectional(eventModel.getEndurtekningProperty());
+
+        endurtekningLokadagurPicker.valueProperty().bindBidirectional(eventModel.getEndurtekningLokadagurProperty());
+
+        endurtekningComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            boolean showControls = newValue != Endurtekning.EKKI;
+            endurtekningControls.setVisible(showControls);
+        });
+
+        endurtekningControls.setVisible(endurtekningComboBox.getValue() != Endurtekning.EKKI);
     }
 
     /**

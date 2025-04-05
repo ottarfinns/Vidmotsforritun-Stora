@@ -24,6 +24,8 @@ public class EventModel {
     private final SimpleObjectProperty<LocalDate> dags;
     private final SimpleObjectProperty<LocalTime> timi;
     private final SimpleObjectProperty<Media> myndband;
+    private final SimpleObjectProperty<Endurtekning> endurtekning;
+    private final SimpleObjectProperty<LocalDate> endurtekningLokadagur;
 
     /**
      * Smiður fyrir klasann sem upphafsstillir eigindin.
@@ -36,6 +38,20 @@ public class EventModel {
         this.dags = new SimpleObjectProperty<>(LocalDate.now());
         this.timi = new SimpleObjectProperty<>(null);
         this.myndband = new SimpleObjectProperty<>(null);
+        this.endurtekning = new SimpleObjectProperty<>(Endurtekning.EKKI);
+        this.endurtekningLokadagur = new SimpleObjectProperty<>(null);
+    }
+
+    public EventModel(EventModel other) {
+        this.eventHeiti = new SimpleStringProperty(other.getEventHeiti());
+        this.lysing = new SimpleStringProperty(other.getLysing());
+        this.stadssetning = new SimpleStringProperty(other.getStadssetning());
+        this.flokkur = new SimpleObjectProperty<>(other.getFlokkur());
+        this.dags = new SimpleObjectProperty<>(other.getDags());
+        this.timi = new SimpleObjectProperty<>(other.getTimi());
+        this.myndband = new SimpleObjectProperty<>(other.getMyndband());
+        this.endurtekning = new SimpleObjectProperty<>(other.getEndurtekning());
+        this.endurtekningLokadagur = new SimpleObjectProperty<>(other.getEndurtekningLokadagur());
     }
 
 
@@ -88,6 +104,14 @@ public class EventModel {
     }
 
     /**
+     * Getter fyrir dagsetningu viðburðar.
+     * @return dagsetning viðburðar.
+     */ 
+    public LocalDate getDags() {
+        return dags.get();
+    }
+
+    /**
      * Getter fyrir ObjectProperty flokks viðburðarins.
      * @return ObjectProperty fyrir flokk viðburðarins.
      */
@@ -128,10 +152,74 @@ public class EventModel {
     }
 
     /**
+     * Getter fyrir myndband viðburðar.
+     * @return myndband viðburðar.
+     */
+    public Media getMyndband() {
+        return myndband.get();
+    }
+
+    /**
      * Setter fyrir myndband viðburðarins.
      * @param myndband Myndband sem á að setja sem eigindi.
      */
     public void setMyndband(Media myndband) {
         this.myndband.set(myndband);
+    }
+
+    /**
+     * Getter fyrir endurtekningarmynstur.
+     * @return endurtekningarmynstur.
+     */
+    public Endurtekning getEndurtekning() {
+        return endurtekning.get();
+    }
+
+    /**
+     * Getter fyrir ObjectProperty endurtekningar.
+     * @return ObjectProperty fyrir endurtekningu.
+     */
+    public ObjectProperty<Endurtekning> getEndurtekningProperty() {
+        return endurtekning;
+    }
+
+    /**
+     * Getter fyrir lokadag endurtekningar.
+     * @return lokadagur endurtekningar.
+     */
+    public LocalDate getEndurtekningLokadagur() {
+        return endurtekningLokadagur.get();
+    }
+
+    /**
+     * Getter fyrir ObjectProperty lokadags endurtekningar.
+     * @return ObjectProperty fyrir lokadag endurtekningar.
+     */
+    public ObjectProperty<LocalDate> getEndurtekningLokadagurProperty() {
+        return endurtekningLokadagur;
+    }
+
+    /**
+     * Setter fyrir eventHeiti.
+     * @param eventHeiti Heiti sem á að setja sem eigindi.
+     */
+    public void setEventHeiti(String eventHeiti) {
+        this.eventHeiti.set(eventHeiti);
+    }
+
+    /**
+     * Getter fyrir flokk viðburðar.
+     * @return flokk viðburðar.
+     */
+    public Flokkur getFlokkur() {
+        return flokkur.get();
+    }
+
+    /**
+     * Setter fyrir dagsetningu viðburðar.
+     * @param dags Dagsetning sem á að setja sem eigindi.
+     */
+    public void setDags(LocalDate dags) {
+        this.dags.set(dags);
     }
 }

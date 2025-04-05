@@ -1,13 +1,19 @@
 package vidmot.eventmanager;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import vinnsla.EventList;
 import vinnsla.EventModel;
+import vinnsla.Endurtekning;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -53,7 +59,47 @@ public class EventManagerController {
      * Vistar viðburðin með því að bæta EventModel viðburðarins í lista ef hann er ekki þegar til.
      */
     public void vista() {
-        eventList.addEvent(currentView.getEventModel());
+        EventModel eventModel = currentView.getEventModel();
+        if (eventModel.getEndurtekning() != null &&
+            eventModel.getEndurtekning() != Endurtekning.EKKI &&
+            eventModel.getEndurtekningLokadagur() != null) {
+
+            int nr = 1;
+            int incr = 1;
+            int totalIntervals = 0;
+
+            if (eventModel.getEndurtekning() == Endurtekning.DAGLEGA) {
+                totalIntervals = (int) eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).getDays();
+            }
+            else if (eventModel.getEndurtekning() == Endurtekning.VIKULEGA) {
+                incr = 7;
+                totalIntervals = (int) eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).getDays() / 7;
+            }
+            else if (eventModel.getEndurtekning() == Endurtekning.MANADARLEGA) {
+                totalIntervals = (int) eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).toTotalMonths();
+            }
+            else if (eventModel.getEndurtekning() == Endurtekning.ARLEGA) {
+                totalIntervals = (int) eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).getYears();
+            }
+
+            for (int i = 0; i <= totalIntervals; i++) {
+                EventModel newEventModel = new EventModel(eventModel);
+                newEventModel.setEventHeiti(eventModel.getEventHeiti() + " - " + nr);
+                
+                if (eventModel.getEndurtekning() == Endurtekning.MANADARLEGA) {
+                    newEventModel.setDags(eventModel.getDags().plusMonths(i));
+                } else if (eventModel.getEndurtekning() == Endurtekning.ARLEGA) {
+                    newEventModel.setDags(eventModel.getDags().plusYears(i));
+                } else {
+                    newEventModel.setDags(eventModel.getDags().plusDays(i * incr));
+                }
+                
+                eventList.addEvent(newEventModel);
+                nr++;
+            }
+        } else {
+            eventList.addEvent(eventModel);
+        }
     }
 
     /**
@@ -87,7 +133,7 @@ public class EventManagerController {
     }
 
     /**
-     * Opnar vistaðan viðburð eftir nafni, eða býr til nýjan ef enginn viðburður finnst.
+     * Opnar dialog til að fá nafn á vistuðum viðburði og opnar hann ef viðburðurinn finnst.
      */
     public void opna() {
         TextInputDialog dialog = new TextInputDialog();
@@ -98,25 +144,34 @@ public class EventManagerController {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             String eventName = result.get();
-
-            EventModel eventModel = eventList.findEventByName(eventName);
-            if (eventModel != null) {
-                currentView = findEventView(eventModel);
-
-                if (currentView == null) {
-                    currentView = new EventView(eventModel);
-                    fxEventViews.getChildren().add(currentView);
-                }
-
-            } else {
-                System.out.println("Enginn viðburður með nafnið " + eventName + " fannst.");
-                System.out.println("Opnum nýjan viðburð.");
-                EventView newView = new EventView();
-                fxEventViews.getChildren().add(newView);
-                currentView = newView;
-            }
-            switchView(currentView);
+            finnaEvent(eventName);
         }
+    }
+
+    /**
+     * Finnur viðburð eftir nafni og opnar hann ef hann finnst
+     * @param eventName nafn á viðburði
+     */
+    public void finnaEvent(String eventName) {
+
+        EventModel eventModel = eventList.findEventByName(eventName);
+        if (eventModel != null) {
+            currentView = findEventView(eventModel);
+
+            if (currentView == null) {
+                currentView = new EventView(eventModel);
+                fxEventViews.getChildren().add(currentView);
+            }
+
+        } else {
+            System.out.println("Enginn viðburður með nafnið " + eventName + " fannst.");
+            System.out.println("Opnum nýjan viðburð.");
+            EventView newView = new EventView();
+            fxEventViews.getChildren().add(newView);
+            currentView = newView;
+        }
+        switchView(currentView);
+
     }
 
     /**
@@ -152,6 +207,21 @@ public class EventManagerController {
      * Skiptir yfir í yfirlitssíðu.
      */
     public void goToOverview() {
-        ViewSwitcher.switchTo(View.OVERVIEW);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vidmot/eventmanager/event-overview.fxml"));
+
+            // Búum til nýjan controller
+            OverviewController overviewController = new OverviewController();
+            loader.setController(overviewController);
+
+            Parent root = loader.load();
+            Scene overviewScene = new Scene(root);
+
+            Stage currentStage = (Stage) fxEventViews.getScene().getWindow();
+            currentStage.setScene(overviewScene);
+            currentStage.setTitle("Yfirlit");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
