@@ -32,3 +32,4 @@ mvn clean install
 ```bash
 mvn javafx:run
 ```
+Athugið að EventManager2 er rótarmappa forritsins
