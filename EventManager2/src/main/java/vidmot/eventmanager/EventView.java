@@ -98,7 +98,6 @@ public class EventView extends VBox {
         this.eventModel = eventModel;
         System.out.println("Opnum gamla sem var lokað: " + this.eventModel.getEventHeiti());
         System.out.println("Tíminn: " + this.eventModel.getTimi());
-        System.out.println("Dagsetning: " + this.eventModel.getDagsetning());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("event-view.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);

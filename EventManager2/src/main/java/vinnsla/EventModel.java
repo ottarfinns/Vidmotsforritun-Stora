@@ -42,6 +42,18 @@ public class EventModel {
         this.endurtekningLokadagur = new SimpleObjectProperty<>(null);
     }
 
+    public EventModel(EventModel other) {
+        this.eventHeiti = new SimpleStringProperty(other.getEventHeiti());
+        this.lysing = new SimpleStringProperty(other.getLysing());
+        this.stadssetning = new SimpleStringProperty(other.getStadssetning());
+        this.flokkur = new SimpleObjectProperty<>(other.getFlokkur());
+        this.dags = new SimpleObjectProperty<>(other.getDags());
+        this.timi = new SimpleObjectProperty<>(other.getTimi());
+        this.myndband = new SimpleObjectProperty<>(other.getMyndband());
+        this.endurtekning = new SimpleObjectProperty<>(other.getEndurtekning());
+        this.endurtekningLokadagur = new SimpleObjectProperty<>(other.getEndurtekningLokadagur());
+    }
+
 
     /**
      * Getter fyrir StringProperty viðburðarheitisins.
@@ -95,8 +107,8 @@ public class EventModel {
      * Getter fyrir dagsetningu viðburðar.
      * @return dagsetning viðburðar.
      */ 
-    public String getDagsetning() {
-        return dags.get().toString();
+    public LocalDate getDags() {
+        return dags.get();
     }
 
     /**
@@ -140,6 +152,14 @@ public class EventModel {
     }
 
     /**
+     * Getter fyrir myndband viðburðar.
+     * @return myndband viðburðar.
+     */
+    public Media getMyndband() {
+        return myndband.get();
+    }
+
+    /**
      * Setter fyrir myndband viðburðarins.
      * @param myndband Myndband sem á að setja sem eigindi.
      */
@@ -177,5 +197,29 @@ public class EventModel {
      */
     public ObjectProperty<LocalDate> getEndurtekningLokadagurProperty() {
         return endurtekningLokadagur;
+    }
+
+    /**
+     * Setter fyrir eventHeiti.
+     * @param eventHeiti Heiti sem á að setja sem eigindi.
+     */
+    public void setEventHeiti(String eventHeiti) {
+        this.eventHeiti.set(eventHeiti);
+    }
+
+    /**
+     * Getter fyrir flokk viðburðar.
+     * @return flokk viðburðar.
+     */
+    public Flokkur getFlokkur() {
+        return flokkur.get();
+    }
+
+    /**
+     * Setter fyrir dagsetningu viðburðar.
+     * @param dags Dagsetning sem á að setja sem eigindi.
+     */
+    public void setDags(LocalDate dags) {
+        this.dags.set(dags);
     }
 }

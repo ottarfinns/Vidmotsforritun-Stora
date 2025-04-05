@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import vinnsla.EventList;
 import vinnsla.EventModel;
+import vinnsla.Endurtekning;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -58,7 +59,24 @@ public class EventManagerController {
      * Vistar viðburðin með því að bæta EventModel viðburðarins í lista ef hann er ekki þegar til.
      */
     public void vista() {
-        eventList.addEvent(currentView.getEventModel());
+        EventModel eventModel = currentView.getEventModel();
+        if (eventModel.getEndurtekning() != null &&
+            eventModel.getEndurtekning() != Endurtekning.EKKI &&
+            eventModel.getEndurtekningLokadagur() != null) {
+
+            if (eventModel.getEndurtekning() == Endurtekning.DAGLEGA) {
+                System.out.println("Endurtekning: Daglega");
+                int fjoldiEndurtekninga = eventModel.getDags().until(eventModel.getEndurtekningLokadagur()).getDays();
+                for (int i = 0; i <= fjoldiEndurtekninga; i++) {
+                    EventModel newEventModel = new EventModel(eventModel);
+                    newEventModel.setEventHeiti(eventModel.getEventHeiti() + " - " + (i+1));
+                    newEventModel.setDags(eventModel.getDags().plusDays(i));
+                    eventList.addEvent(newEventModel);
+                }
+            }
+        } else {
+            eventList.addEvent(eventModel);
+        }
     }
 
     /**
