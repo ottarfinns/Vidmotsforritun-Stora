@@ -8,18 +8,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import vinnsla.Endurtekning;
 import vinnsla.EventList;
 import vinnsla.EventModel;
 import vinnsla.Flokkur;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 /**
  * Stýriklasi fyrir yfirlitssíðu.
@@ -171,18 +170,54 @@ public class OverviewController {
      * Opnar valinn viðburð.
      */
     private void openSelectedEvent() {
-        // TODO: Implement opening the selected event
         EventManagerController controller = goBack();
         controller.finnaEvent(selectedEvent.getEventHeiti());
     }
 
     /**
-     * Eyðir völdum viðburði.
+     * Athugar hvort að viðburður sé endurtekinn og eyðir viðburðum eftir svari notanda.
      */
     private void deleteSelectedEvent() {
         if (selectedEvent != null) {
-            eventList.removeEvent(selectedEvent);
-            loadEvents(); 
+            if (selectedEvent.getEndurtekning() != Endurtekning.EKKI) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Eyða endurteknum viðburði");
+                alert.setHeaderText(null);
+                alert.setContentText("Þetta er endurtekinn viðburður. Viltu eyða öllum framtíðarviðburðum eða bara þessum viðburði?");
+
+                ButtonType allFutureButton = new ButtonType("Eyða öllum framtíðarviðburðum");
+                ButtonType singleButton = new ButtonType("Eyða einungis þessum viðburði");
+                ButtonType cancelButton = new ButtonType("Hætta við", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                alert.getButtonTypes().setAll(allFutureButton, singleButton, cancelButton);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent()) {
+                    if (result.get() == allFutureButton) {
+                        String[] parts = selectedEvent.getEventHeiti().split(" - ");
+                        if (parts.length > 1) {
+                            int currentNumber = Integer.parseInt(parts[1]);
+                            String baseName = parts[0];
+
+                            eventList.getAllEvents().removeIf(event -> {
+                                if (event.getEventHeiti().startsWith(baseName + " - ")) {
+                                    String[] eventParts = event.getEventHeiti().split(" - ");
+                                    if (eventParts.length > 1) {
+                                        int eventNumber = Integer.parseInt(eventParts[1]);
+                                        return eventNumber >= currentNumber;
+                                    }
+                                }
+                                return false;
+                            });
+                        }
+                    } else if (result.get() == singleButton) {
+                        eventList.removeEvent(selectedEvent);
+                    }
+                }
+            } else {
+                eventList.removeEvent(selectedEvent);
+            }
+            loadEvents();
         }
     }
 
@@ -194,19 +229,15 @@ public class OverviewController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vidmot/eventmanager/eventManager-view.fxml"));
             Parent root = loader.load();
 
-            // Get the controller from the loader
             EventManagerController controller = loader.getController();
 
-            // Set the controller in the application
             EventManagerApplication.setController(controller);
 
-            // Create a new scene and set it
             Stage currentStage = (Stage) eventTableView.getScene().getWindow();
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
             currentStage.setTitle("Viðburðarstjórinn");
 
-            // Initialize the view
             controller.initialize();
 
             return controller;
