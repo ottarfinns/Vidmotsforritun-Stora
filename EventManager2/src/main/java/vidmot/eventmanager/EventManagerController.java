@@ -15,6 +15,7 @@ import vinnsla.EventModel;
 import vinnsla.Endurtekning;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -73,7 +74,88 @@ public class EventManagerController {
             }
         }
 
-        if (eventModel.getEndurtekning() != null &&
+        if (eventModel.getEndurtekning() != Endurtekning.EKKI && eventModel.getEndurtekningLokadagur() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Villa");
+            alert.setHeaderText(null);
+            alert.setContentText("Endurteknir viðburðir þurfa að hafa lokadag.");
+            alert.showAndWait();
+            return;
+        }
+
+        if (eventModel.getEventHeiti().contains(" - ")) {
+            String[] parts = eventModel.getEventHeiti().split(" - ");
+            if (parts.length > 1) {
+                int currentNumber = Integer.parseInt(parts[1]);
+                String baseName = parts[0];
+
+                int highestNumber = currentNumber;
+                for (EventModel existingEvent : eventList.getAllEvents()) {
+                    if (existingEvent.getEventHeiti().startsWith(baseName + " - ")) {
+                        String[] eventParts = existingEvent.getEventHeiti().split(" - ");
+                        if (eventParts.length > 1) {
+                            int eventNumber = Integer.parseInt(eventParts[1]);
+                            highestNumber = Math.max(highestNumber, eventNumber);
+                        }
+                    }
+                }
+
+                for (EventModel existingEvent : eventList.getAllEvents()) {
+                    if (existingEvent.getEventHeiti().startsWith(baseName + " - ")) {
+                        String[] eventParts = existingEvent.getEventHeiti().split(" - ");
+                        if (eventParts.length > 1) {
+                            int eventNumber = Integer.parseInt(eventParts[1]);
+                            if (eventNumber >= currentNumber) {
+                                existingEvent.setEventHeiti(baseName + " - " + eventNumber);
+                                existingEvent.getLysingProperty().set(eventModel.getLysing());
+                                existingEvent.getStadssetningProperty().set(eventModel.getStadssetning());
+                                existingEvent.getFlokkurProperty().set(eventModel.getFlokkur());
+                                existingEvent.getTimiProperty().set(eventModel.getTimi());
+                                existingEvent.getMyndbandProperty().set(eventModel.getMyndband());
+                            }
+                        }
+                    }
+                }
+
+                if (eventModel.getEndurtekningLokadagur() != null) {
+                    LocalDate lastEventDate = null;
+                    for (EventModel existingEvent : eventList.getAllEvents()) {
+                        if (existingEvent.getEventHeiti().startsWith(baseName + " - ")) {
+                            if (lastEventDate == null || existingEvent.getDags().isAfter(lastEventDate)) {
+                                lastEventDate = existingEvent.getDags();
+                            }
+                        }
+                    }
+
+                    if (lastEventDate != null && eventModel.getEndurtekningLokadagur().isAfter(lastEventDate)) {
+                        int nr = highestNumber + 1;
+                        LocalDate currentDate = lastEventDate;
+                        int incr = 1;
+
+                        if (eventModel.getEndurtekning() == Endurtekning.VIKULEGA) {
+                            incr = 7;
+                        }
+
+                        while (currentDate.isBefore(eventModel.getEndurtekningLokadagur())) {
+                            EventModel newEventModel = new EventModel(eventModel);
+                            newEventModel.setEventHeiti(baseName + " - " + nr);
+
+                            if (eventModel.getEndurtekning() == Endurtekning.MANADARLEGA) {
+                                currentDate = currentDate.plusMonths(1);
+                            } else if (eventModel.getEndurtekning() == Endurtekning.ARLEGA) {
+                                currentDate = currentDate.plusYears(1);
+                            } else {
+                                currentDate = currentDate.plusDays(incr);
+                            }
+
+                            newEventModel.setDags(currentDate);
+                            eventList.addEvent(newEventModel);
+                            nr++;
+                        }
+                    }
+                }
+            }
+        } else if (eventModel.getEndurtekning() != null &&
             eventModel.getEndurtekning() != Endurtekning.EKKI &&
             eventModel.getEndurtekningLokadagur() != null) {
 
